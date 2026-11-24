@@ -69,6 +69,8 @@ final class CreateAdminCommand extends Command
         $question->setHidden(true);
         $question->setHiddenFallback(false);
         $question->setTrimmable(false);
-        return $io->askQuestion($question);
+        $answer = $io->askQuestion($question);
+
+        return $answer === null ? null : rtrim($answer, "\r\n");
     }
 }

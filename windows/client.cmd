@@ -9,7 +9,7 @@ where py >nul 2>&1
 if not errorlevel 1 goto py_launcher
 set "FIXPOINT_PYTHON=%USERPROFILE%\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe"
 if exist "%FIXPOINT_PYTHON%" goto selected_python
-for /f "usebackq delims=" %%i in (".tools\python-path.txt") do set "FIXPOINT_PYTHON=%%i"
+if exist ".tools\python-path.txt" for /f "usebackq delims=" %%i in (".tools\python-path.txt") do set "FIXPOINT_PYTHON=%%i"
 if exist "%FIXPOINT_PYTHON%" goto selected_python
 echo Python 3.10+ was not found. See README.md.
 exit /b 1

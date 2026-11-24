@@ -7,6 +7,7 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\TerminalInputHelper;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
@@ -30,6 +31,11 @@ final class CreateAdminCommand extends Command
         if (!$input->isInteractive()) {
             $io->error('Запустіть команду в інтерактивному терміналі.');
             return Command::INVALID;
+        }
+
+        if (DIRECTORY_SEPARATOR === '\\') {
+            // Load tools before QuestionHelper changes the Windows input code page.
+            class_exists(TerminalInputHelper::class);
         }
 
         $email = mb_strtolower(trim((string) $io->ask('Email адміністратора')), 'UTF-8');

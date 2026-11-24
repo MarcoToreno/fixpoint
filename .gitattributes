@@ -1,0 +1,7 @@
+* text=auto
+*.php text eol=lf
+*.twig text eol=lf
+*.py text eol=lf
+*.cmd text eol=crlf
+*.pdf binary
+*.docx binary

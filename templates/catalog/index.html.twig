@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="intro">
+    <p class="eyebrow">FixPoint / Майстерня техніки</p>
+    <h1>Каталог послуг</h1>
+    <p>Знайди потрібний ремонт, переглянь орієнтовну ціну та тривалість робіт.</p>
+</div>
+
+<form class="filters" method="get" action="{{ path('catalog_index') }}">
+    <label>Пошук за назвою
+        <input name="q" value="{{ filter.query }}" maxlength="120" placeholder="Наприклад, акумулятор">
+    </label>
+    <label>Категорія
+        <select name="category">
+            <option value="">Усі категорії</option>
+            {% for category in categories %}
+                <option value="{{ category.id }}" {{ filter.category == category.id ? 'selected' }}>{{ category.name }}</option>
+            {% endfor %}
+        </select>
+    </label>
+    <button type="submit">Знайти</button>
+    {% if filter.query or filter.category %}<a class="reset" href="{{ path('catalog_index') }}">Скинути</a>{% endif %}
+</form>
+
+<p class="count">Знайдено послуг: {{ services|length }}</p>
+<div class="catalog">
+    {% for service in services %}
+        <article class="service">
+            <p class="category">{{ service.category.name }}</p>
+            <h2><a href="{{ path('catalog_show', {id: service.id}) }}">{{ service.title }}</a></h2>
+            <p class="description">{{ service.description }}</p>
+            <div class="facts">
+                <strong>{{ service.price }} грн</strong>
+                <span>{{ service.duration }} хв</span>
+                <span class="status {{ service.available ? 'available' : 'paused' }}">{{ service.available ? 'Доступно' : 'Тимчасово недоступно' }}</span>
+            </div>
+        </article>
+    {% else %}
+        <p>За цими умовами послуг не знайдено.</p>
+    {% endfor %}
+</div>
+{% endblock %}

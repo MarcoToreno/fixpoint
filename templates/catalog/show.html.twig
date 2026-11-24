@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ service.title }} · FixPoint{% endblock %}
+
+{% block body %}
+<a class="back" href="{{ path('catalog_index') }}">← Усі послуги</a>
+<article class="detail">
+    <p class="eyebrow">{{ service.category.name }}</p>
+    <h1>{{ service.title }}</h1>
+    <p>{{ service.description }}</p>
+    <dl class="specs">
+        <div><dt>Орієнтовна ціна</dt><dd>{{ service.price }} грн</dd></div>
+        <div><dt>Тривалість</dt><dd>{{ service.duration }} хв</dd></div>
+        <div><dt>Стан</dt><dd>{{ service.available ? 'Доступно' : 'Тимчасово недоступно' }}</dd></div>
+    </dl>
+    <a href="{{ path('catalog_index', {category: service.category.id}) }}">Усі послуги категорії «{{ service.category.name }}»</a>
+</article>
+{% endblock %}

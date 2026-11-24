@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="uk">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Каталог послуг · FixPoint{% endblock %}</title>
+    <link rel="stylesheet" href="{{ asset('fixpoint.css') }}">
+</head>
+<body>
+<header class="site-header">
+    <div class="wrap">
+        <a class="brand" href="{{ path('catalog_index') }}">FixPoint</a>
+        <nav aria-label="Основне меню">
+            <a href="{{ path('catalog_index') }}">Каталог</a>
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('admin') }}">Адмінка</a>
+            {% endif %}
+            {% if app.user %}
+                <form method="post" action="{{ path('app_logout') }}">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('logout') }}">
+                    <button type="submit">Вийти</button>
+                </form>
+            {% else %}
+                <a href="{{ path('app_login') }}">Вхід</a>
+            {% endif %}
+        </nav>
+    </div>
+</header>
+<main class="wrap">{% block body %}{% endblock %}</main>
+</body>
+</html>

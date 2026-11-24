@@ -12,6 +12,7 @@
 /.tools/
 /.vs/
 /.idea/
+/.phpunit.cache/
 __pycache__/
 *.pyc
 .venv/

@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+{% block title %}Вхід · FixPoint{% endblock %}
+
+{% block body %}
+<section class="login">
+    <h1>Вхід в адмінку</h1>
+    {% if error %}
+        <p class="error" role="alert">{{ error.messageKey|trans(error.messageData, 'security') }}</p>
+    {% endif %}
+    {% if app.user %}
+        {% if is_granted('ROLE_ADMIN') %}
+            <p>Ви вже увійшли. <a href="{{ path('admin') }}">Відкрити адмінку</a></p>
+        {% else %}
+            <p>Для керування каталогом потрібна роль адміністратора.</p>
+        {% endif %}
+    {% else %}
+        <form method="post" action="{{ path('app_login') }}">
+            <label>Email <input type="email" name="_username" value="{{ last_username }}" autocomplete="email" required></label>
+            <label>Пароль <input type="password" name="_password" autocomplete="current-password" required></label>
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+            <button type="submit">Увійти</button>
+        </form>
+    {% endif %}
+</section>
+{% endblock %}
